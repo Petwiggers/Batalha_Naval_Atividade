@@ -99,18 +99,22 @@ fun achaObjetoProximo(y:Int, x:Int, coordenadas:Array<Array<String>>): String {
         return "M"
     }
 
-    var menorValorLinha = verificaColunaLinhaMaisProxima(numerosMesmaLinha.toCharArray(), y)
-    var menorValorColuna = verificaColunaLinhaMaisProxima(numerosMesmaColuna.toCharArray(), x)
+    var menorValorLinha = verificaColunaLinhaMaisProxima(numerosMesmaLinha.toCharArray(), x)
+    var menorValorColuna = verificaColunaLinhaMaisProxima(numerosMesmaColuna.toCharArray(), y)
 
-
-    if (menorValorColuna<menorValorLinha && menorValorColuna<=3){
-        return menorValorColuna.toString()
-    }else if(menorValorLinha <=3){
-        return menorValorLinha.toString()
+    var menorValor = 0
+    if(menorValorColuna<menorValorLinha){
+         menorValor = menorValorColuna
+    }else if(menorValorLinha<menorValorColuna){
+         menorValor = menorValorLinha
+    }else{
+         menorValor = menorValorLinha
     }
 
+    if(menorValor<=3){
+        return menorValor.toString()
+    }
     return "M"
-
 }
 
 fun verificaColunaLinhaMaisProxima(array: CharArray, x:Int): Int{
@@ -127,6 +131,6 @@ fun verificaColunaLinhaMaisProxima(array: CharArray, x:Int): Int{
         }
     }
 
-    return menorValor*1
+    return menorValor
 
 }
