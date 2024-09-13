@@ -14,7 +14,6 @@ fun main() {
             jogar=false
         }
     }
-
 }
 
 fun jogar(){
@@ -26,7 +25,7 @@ fun jogar(){
     var posicoesBombardeadas = Array<String>(15){""}
     var pontuacao = 0
 
-    while(contador <= 5){
+    while(contador <= 14){
         mostrarJogo(jogo)
         var x =0
         var y =0
@@ -46,17 +45,23 @@ fun jogar(){
                 readln()
             }
             else if(coordenadas[y][x] != " "){
+                var teste = "${coordenadas[y][x]}\u001B[0m"
+                print(teste)
                 jogo[y][x] = "${vermelho}${coordenadas[y][x]}\u001B[0m"
+                pontuacao += retornaPontuacao(coordenadas[y][x])
                 contador++
             }
             else{
                 jogo[y][x] = "${verde}${achaObjetoProximo(y,x,coordenadas)}\u001B[0m"
                 contador ++
             }
-            posicoesBombardeadas[contador] = posicao
+            posicoesBombardeadas[contador-1] = posicao
+            println("Contador: "+contador)
         }
     }
     mostrarJogo(mesclarMatrizes(jogo,coordenadas))
+    print("Sua pontuação foi de: $pontuacao")
+    readln()
 
 }
 
@@ -76,7 +81,6 @@ fun mostrarJogo(jogo:Array<Array<String>>){
 }
 
 fun sorteiaLocalizaao(): Array<Array<String>>{
-    var azul = "\u001B[34m"
     var portaAvioes: Int = 10
     var cruzadores: Int = 1
     var rebocadores: Int = 2
@@ -86,7 +90,7 @@ fun sorteiaLocalizaao(): Array<Array<String>>{
         var i: Int = Random.nextInt(0,9)
         var j: Int = Random.nextInt(0,9)
         if(jogo[i][j] == " "){
-            jogo[i][j] = "${azul}R\u001B[0m"
+            jogo[i][j] = "R"
             rebocadores--
         }
     }
@@ -95,7 +99,7 @@ fun sorteiaLocalizaao(): Array<Array<String>>{
         var i: Int = Random.nextInt(0,9)
         var j: Int = Random.nextInt(0,9)
         if(jogo[i][j] == " "){
-            jogo[i][j] = "${azul}C\u001B[0m"
+            jogo[i][j] = "C"
             cruzadores--
         }
     }
@@ -104,7 +108,7 @@ fun sorteiaLocalizaao(): Array<Array<String>>{
         var i: Int = Random.nextInt(0,9)
         var j: Int = Random.nextInt(0,9)
         if(jogo[i][j] == " "){
-            jogo[i][j] = "${azul}P\u001B[0m"
+            jogo[i][j] = "P"
             portaAvioes--
         }
     }
@@ -170,12 +174,13 @@ fun verificaSePosicaoFoiSorteada(posicoesBombardeadas:Array<String>, posicao:Str
 
 fun mesclarMatrizes(jogo:Array<Array<String>>, coordenadas: Array<Array<String>>): Array<Array<String>>{
     var matrizResultante: Array<Array<String>> = Array(10){Array(10){""} }
+    var azul = "\u001B[34m"
     for (i in jogo.indices){
         for (j in jogo[0].indices){
             matrizResultante[i][j]= if (jogo[i][j] != " "){
                 jogo[i][j]
             }else if (coordenadas[i][j] != " ") {
-                coordenadas[i][j]
+                "$azul${coordenadas[i][j]}\u001B[0m"
             }else{
                 " "
             }
@@ -184,7 +189,7 @@ fun mesclarMatrizes(jogo:Array<Array<String>>, coordenadas: Array<Array<String>>
     return matrizResultante
 }
 
-fun retornPontuacao(x:String):Int{
+fun retornaPontuacao(x:String):Int{
     var pontuacao = 0
     when(x){
         "P" -> pontuacao+= 5
