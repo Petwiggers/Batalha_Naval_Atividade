@@ -1,3 +1,4 @@
+//Peterson Wiggers, Isaque Oliveira e Nicole Pedroso
 import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.math.abs
@@ -197,6 +198,4 @@ fun retornaPontuacao(x:String):Int{
         "C" -> pontuacao+= 15
     }
     return pontuacao
-    //Falta implementar isso no jogo
-
 }
